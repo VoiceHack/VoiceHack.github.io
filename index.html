@@ -2,13 +2,58 @@
 <html lang="tr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#101016">
   <meta name="description" content="Tarayıcında gerçek zamanlı ses efektleri dene. Sesin cihazından çıkmaz.">
   <title>Realtime Voice — Sesini değiştir</title>
   <style>
-    :root{color-scheme:dark;--bg:#101016;--panel:#1b1926;--line:#ffffff20;--text:#f5f3ff;--muted:#aaa6bb;--purple:#a393ff;--mint:#89f0c5;--danger:#ff8296}
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -18%,#282044 0,var(--bg) 49%);color:var(--text);font:15px system-ui,-apple-system,"Segoe UI",sans-serif}button,input{font:inherit}.shell{width:min(100% - 28px,760px);margin:auto;padding:28px 0 42px}header{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:800;font-size:18px}.tag{color:var(--mint);font-size:12px;border:1px solid #89f0c544;padding:7px 10px;border-radius:20px}main{padding-top:38px}.intro{text-align:center}.intro h1{font-size:clamp(34px,7vw,52px);line-height:1.04;letter-spacing:-.05em;margin:10px 0}.intro p{max-width:560px;margin:0 auto;color:var(--muted);line-height:1.6}.card{margin-top:24px;padding:22px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(155deg,#1d1b29,#17171f 70%);box-shadow:0 24px 70px #0005}.card h2{font-size:18px;margin:0 0 5px}.muted{color:var(--muted);font-size:13px;line-height:1.5}.buttons,.effects{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:16px}.effects{grid-template-columns:repeat(5,1fr)}button{color:var(--text);background:#ffffff08;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer}button:hover{border-color:#a393ff99;background:#a393ff15}button:disabled{opacity:.55;cursor:wait}.primary{background:linear-gradient(105deg,#b7aaff,#8c78ff);color:#171326;border:0;font-weight:800}.stop{background:linear-gradient(105deg,#c64d70,#a93658);color:white;border:0;font-weight:800}.selected{border-color:#a393ff;background:#a393ff25}.status{min-height:24px;margin-top:12px;text-align:center;color:var(--mint);font-size:13px}.player{width:100%;margin-top:14px}.volume{display:flex;align-items:center;gap:12px;margin-top:14px;color:var(--muted);font-size:13px}.volume input{flex:1;accent-color:var(--purple)}.note{min-height:20px;color:var(--danger);font-size:13px;margin-top:12px;white-space:pre-line}.small{font-size:12px;color:var(--muted);text-align:center;line-height:1.6;margin-top:20px}footer{text-align:center;color:#777485;font-size:12px;margin-top:30px}@media(max-width:560px){.shell{padding-top:18px}.card{padding:16px}.buttons{grid-template-columns:1fr 1fr}.effects{grid-template-columns:repeat(2,1fr)}.tag{font-size:10px}}
+:root {
+      color-scheme: dark;
+      --bg: #101016;
+      --line: rgba(255, 255, 255, .09);
+      --text: #f5f3ff;
+      --muted: #a4a1b4;
+      --purple: #a393ff;
+      --mint: #89f0c5;
+      --danger: #ff8296;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% -18%, #282044 0, var(--bg) 49%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button, select, input { font: inherit; }
+    .shell { width: min(100% - 28px, 760px); margin: auto; padding: 28px 0 42px; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .brand { font-weight: 800; font-size: 18px; }
+    .tag { color: var(--mint); font-size: 12px; border: 1px solid #89f0c544; padding: 7px 10px; border-radius: 20px; }
+    main { padding-top: 38px; }
+    .intro { text-align: center; }
+    .intro h1 { font-size: clamp(34px, 7vw, 52px); line-height: 1.04; letter-spacing: -.05em; margin: 10px 0; }
+    .intro p { max-width: 560px; margin: 0 auto; color: var(--muted); line-height: 1.6; }
+    .card { margin-top: 24px; padding: 22px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(155deg, #1d1b29, #17171f 70%); box-shadow: 0 24px 70px #0005; }
+    .card h2 { font-size: 18px; margin: 0 0 5px; }
+    .muted { color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .buttons, .effects { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin-top: 16px; }
+    .effects { grid-template-columns: repeat(5, 1fr); }
+    button { color: var(--text); background: #ffffff08; border: 1px solid var(--line); border-radius: 12px; padding: 12px; cursor: pointer; }
+    button:hover { border-color: #a393ff99; background: #a393ff15; }
+    button:disabled { opacity: .55; cursor: wait; }
+    .primary { background: linear-gradient(105deg, #b7aaff, #8c78ff); color: #171326; border: 0; font-weight: 800; }
+    .stop { background: linear-gradient(105deg, #c64d70, #a93658); color: white; border: 0; font-weight: 800; }
+    .selected { border-color: #a393ff; background: #a393ff25; }
+    .status { min-height: 24px; margin-top: 12px; text-align: center; color: var(--mint); font-size: 13px; }
+    .player { width: 100%; margin-top: 14px; }
+    .volume { display: flex; align-items: center; gap: 12px; margin-top: 14px; color: var(--muted); font-size: 13px; }
+    .volume input { flex: 1; accent-color: var(--purple); }
+    .note { min-height: 20px; color: var(--danger); font-size: 13px; margin-top: 12px; white-space: pre-line; }
+    .small { font-size: 12px; color: var(--muted); text-align: center; line-height: 1.6; margin-top: 20px; }
+    footer { text-align: center; color: #777485; font-size: 12px; margin-top: 30px; }
+    @media(max-width:560px) { .shell { padding-top: 18px; } .card { padding: 16px; } .buttons { grid-template-columns: 1fr 1fr; } .effects { grid-template-columns: repeat(2, 1fr); } .tag { font-size: 10px; } }
   </style>
 </head>
 <body>
@@ -16,155 +61,508 @@
     <header><div class="brand">🎚️ Realtime Voice</div><span class="tag">● Ses cihazında işlenir</span></header>
     <main>
       <section class="intro"><div style="color:var(--purple);font-weight:700;letter-spacing:.15em;font-size:11px">CANLI SES STÜDYOSU</div><h1>Sesine başka bir<br>hava kat.</h1><p>Efekt seç, mikrofonunu aç veya sesli mesaj kaydet. İşlem tarayıcında yapılır; sesin sunucuya gönderilmez.</p></section>
+
       <section class="card" aria-label="Canlı ses değiştirici">
-        <h2>Canlı ses değiştirici</h2><div class="muted">Canlı dinleme için kulaklık önerilir. Hoparlör kullanımı yankı oluşturabilir.</div>
-        <div class="effects" id="liveEffects" role="group" aria-label="Canlı ses efekti">
-          <button class="selected" data-effect="baby">🧸 Bebek</button><button data-effect="robot">🤖 Robot</button><button data-effect="deep">🎙️ Kalın</button><button data-effect="funny">😜 Komik</button>
-        </div>
+        <h2>Canlı ses değiştirici</h2>
+        <div class="muted">Canlı dinleme için kulaklık önerilir. Hoparlör kullanımı yankı oluşturabilir.</div>
+        <div class="effects" id="liveEffects"><button class="selected" data-effect="baby">🧸 Bebek</button><button data-effect="robot">🤖 Robot</button><button data-effect="deep">🎙️ Kalın</button><button data-effect="funny">😜 Komik</button></div>
         <label class="volume">Ses seviyesi <input id="volume" type="range" min="0" max="100" value="75"><span id="volumeValue">75%</span></label>
-        <button class="primary" id="liveButton" style="width:100%;margin-top:16px">🎙️ Canlıya al</button><div class="status" id="liveStatus" aria-live="polite"></div><div class="note" id="liveError" role="alert"></div>
+        <button class="primary" id="liveButton" style="width:100%;margin-top:16px">🎙️ Canlıya al</button>
+        <div class="status" id="liveStatus"></div><div class="note" id="liveError"></div>
       </section>
+
       <section class="card">
-        <h2>Efektli sesli mesaj oluştur</h2><div class="muted">Kaydı bitirdikten sonra efekti seç; dönüştürülen sesi dinleyip WAV olarak indirebilirsin.</div>
-        <button class="primary" id="recordButton" style="width:100%;margin-top:16px">🎙️ Sesli mesaj başlat</button><div class="status" id="recordStatus" aria-live="polite"></div>
-        <div class="effects" id="recordEffects" role="group" aria-label="Kayıt efekti">
-          <button class="selected" data-effect="baby">👶 Bebek</button><button data-effect="robot">🤖 Robot</button><button data-effect="deep">🦁 Kalın &amp; derin</button><button data-effect="funny">🤪 Komik</button><button data-effect="original">🎤 Orijinal</button>
-        </div>
+        <h2>Efektli sesli mesaj oluştur</h2>
+        <div class="muted">Kaydı bitirdikten sonra efekti seç; dönüştürülen sesi dinleyip WAV olarak indirebilirsin.</div>
+        <button class="primary" id="recordButton" style="width:100%;margin-top:16px">🎙️ Sesli mesaj başlat</button>
+        <div class="status" id="recordStatus"></div>
+        <div class="effects" id="recordEffects"><button class="selected" data-effect="baby">👶 Bebek</button><button data-effect="robot">🤖 Robot</button><button data-effect="deep">🦁 Kalın &amp; derin</button><button data-effect="funny">🤪 Komik</button><button data-effect="original">🎤 Orijinal</button></div>
         <audio id="player" class="player" controls playsinline></audio>
-        <div class="buttons"><button id="downloadButton">💾 WAV indir</button><button id="newButton">🔄 Yeni kayıt</button></div><div class="note" id="recordError" role="alert"></div>
+        <div class="buttons"><button id="downloadButton">💾 WAV indir</button><button id="newButton">🔄 Yeni kayıt</button></div>
+        <div class="note" id="recordError"></div>
       </section>
+
       <p class="small"><strong>Gizlilik:</strong> Mikrofon erişimi yalnızca canlı mod veya kayıt sırasında kullanılır. Durdurduğunda mikrofon akışı kapatılır. Mikrofon izni için HTTPS veya localhost kullanın.</p>
     </main>
     <footer>Realtime Voice · Web Audio API ile çalışır</footer>
   </div>
+
 <script>
 (() => {
   'use strict';
-  const $ = (s) => document.querySelector(s);
-  const $$ = (s) => [...document.querySelectorAll(s)];
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
   const presets = {
-    baby: { rate: 1.32, low: -2, mid: 2, high: 4, robot: false },
-    robot: { rate: 1, low: 2, mid: 3, high: 1, robot: true },
-    deep: { rate: 0.78, low: 5, mid: 0, high: -4, robot: false },
-    funny: { rate: 1.55, low: -3, mid: 2, high: 5, robot: false },
-    original: { rate: 1, low: 0, mid: 0, high: 0, robot: false }
+    original: {pitch:1, gain:1.0, low:0, mid:0, high:0, robot:false},
+    baby: {pitch:1.32, gain:.93, low:-1.5, mid:2.5, high:5, robot:false},
+    robot: {pitch:1, gain:.72, low:1, mid:3, high:2, robot:true},
+    deep: {pitch:.78, gain:1.12, low:5, mid:.5, high:-3, robot:false},
+    funny: {pitch:1.48, gain:.9, low:-2, mid:3, high:6, robot:false}
   };
-  const names = {baby:'Bebek',robot:'Robot',deep:'Kalın & derin',funny:'Komik',original:'Orijinal'};
-  let context = null, stream = null, liveSource = null, liveNodes = [], liveOscillator = null, liveGain = null;
-  let recorder = null, chunks = [], recordingStream = null, rawBlob = null, resultBlob = null, playerUrl = null;
-  let liveEffect = 'baby', recordEffect = 'baby';
-  const liveButton = $('#liveButton'), liveStatus = $('#liveStatus'), liveError = $('#liveError');
-  const recordButton = $('#recordButton'), recordStatus = $('#recordStatus'), recordError = $('#recordError');
+  const names = {baby:'Bebek',robot:'Robot',deep:'Kalın',funny:'Komik',original:'Orijinal'};
+
+  let ac = null;
+  let micStream = null;
+  let liveSource = null;
+  let liveNodes = [];
+  let liveGain = null;
+  let liveEffect = 'baby';
+
+  let mediaRecorder = null;
+  let mediaChunks = [];
+  let recordStream = null;
+  let rawBlob = null;
+  let resultBlob = null;
+  let resultUrl = null;
+
+  const liveButton = $('#liveButton');
+  const liveStatus = $('#liveStatus');
+  const liveError = $('#liveError');
+  const recordButton = $('#recordButton');
+  const recordStatus = $('#recordStatus');
+  const recordError = $('#recordError');
   const player = $('#player');
 
-  function audioContext() {
+  function getContext() {
     const Ctx = window.AudioContext || window.webkitAudioContext;
     if (!Ctx) throw new Error('Tarayıcınız Web Audio API desteklemiyor.');
-    if (!context || context.state === 'closed') context = new Ctx({latencyHint:'interactive'});
-    return context;
+    if (!ac || ac.state === 'closed') ac = new Ctx({latencyHint:'interactive'});
+    return ac;
   }
+
   async function getMic() {
-    if (!navigator.mediaDevices?.getUserMedia) throw new Error('Mikrofon için HTTPS/localhost ve güncel bir tarayıcı gerekir.');
-    return navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1}});
-  }
-  function disconnectLive() {
-    if (liveOscillator) { try { liveOscillator.stop(); } catch (_) {} liveOscillator = null; }
-    for (const n of liveNodes) { try { n.disconnect(); } catch (_) {} }
-    liveNodes = []; liveSource = null; liveGain = null;
-  }
-  function makeLiveGraph() {
-    const ac = audioContext(), p = presets[liveEffect];
-    disconnectLive();
-    liveSource = ac.createMediaStreamSource(stream);
-    const low = ac.createBiquadFilter(); low.type='lowshelf'; low.frequency.value=320; low.gain.value=p.low;
-    const mid = ac.createBiquadFilter(); mid.type='peaking'; mid.frequency.value=1400; mid.Q.value=0.8; mid.gain.value=p.mid;
-    const high = ac.createBiquadFilter(); high.type='highshelf'; high.frequency.value=3200; high.gain.value=p.high;
-    liveGain = ac.createGain(); liveGain.gain.value=Number($('#volume').value)/100;
-    liveSource.connect(low); low.connect(mid); mid.connect(high); high.connect(liveGain);
-    if (p.robot) {
-      const carrier = ac.createOscillator(), mod = ac.createGain();
-      carrier.type='sawtooth'; carrier.frequency.value=55; mod.gain.value=0.38;
-      carrier.connect(mod.gain); high.connect(mod); mod.connect(liveGain); carrier.start(); liveOscillator=carrier; liveNodes.push(carrier,mod);
+    if (!navigator.mediaDevices?.getUserMedia) {
+      throw new Error('Mikrofon için HTTPS veya localhost gerekir.');
     }
-    liveGain.connect(ac.destination); liveNodes.push(liveSource,low,mid,high,liveGain);
+    return navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true,
+        channelCount: 1,
+        sampleRate: 48000
+      },
+      video: false
+    });
   }
+
+  async function ensureRunning() {
+    const ctx = getContext();
+    if (ctx.state === 'suspended') await ctx.resume();
+  }
+
+  function disconnectLive() {
+    liveNodes.forEach(node => {
+      try { node.disconnect(); } catch (_) {}
+    });
+    liveNodes = [];
+    liveSource = null;
+    liveGain = null;
+  }
+
+  function buildLiveGraph() {
+    if (!micStream) return;
+    disconnectLive();
+
+    const ctx = getContext();
+    const preset = presets[liveEffect] || presets.baby;
+
+    liveSource = ctx.createMediaStreamSource(micStream);
+
+    const highpass = ctx.createBiquadFilter();
+    highpass.type = 'highpass';
+    highpass.frequency.value = 80;
+    highpass.Q.value = .7;
+
+    const low = ctx.createBiquadFilter();
+    low.type = 'lowshelf';
+    low.frequency.value = 300;
+    low.gain.value = preset.low;
+
+    const mid = ctx.createBiquadFilter();
+    mid.type = 'peaking';
+    mid.frequency.value = 1800;
+    mid.Q.value = .85;
+    mid.gain.value = preset.mid;
+
+    const high = ctx.createBiquadFilter();
+    high.type = 'highshelf';
+    high.frequency.value = 5000;
+    high.gain.value = preset.high;
+
+    liveGain = ctx.createGain();
+    liveGain.gain.value = (Number($('#volume').value) / 100) * preset.gain;
+
+    liveSource.connect(highpass);
+    highpass.connect(low);
+    low.connect(mid);
+    mid.connect(high);
+
+    let output = high;
+
+    if (preset.robot) {
+      const carrier = ctx.createOscillator();
+      const modGain = ctx.createGain();
+      const shaper = ctx.createWaveShaper();
+
+      carrier.type = 'sawtooth';
+      carrier.frequency.value = 58;
+      modGain.gain.value = .22;
+
+      const samples = 2048;
+      const curve = new Float32Array(samples);
+      for (let i = 0; i < samples; i++) {
+        const x = i * 2 / samples - 1;
+        curve[i] = (1.55 * x) / (1 + 0.8 * Math.abs(x));
+      }
+      shaper.curve = curve;
+      shaper.oversample = '2x';
+
+      high.connect(modGain);
+      modGain.connect(shaper);
+      output = shaper;
+      carrier.start();
+      liveNodes.push(carrier, modGain, shaper);
+    }
+
+    output.connect(liveGain);
+    liveGain.connect(ctx.destination);
+
+    liveNodes.push(liveSource, highpass, low, mid, high, liveGain);
+  }
+
   async function startLive() {
-    liveButton.disabled=true; liveError.textContent=''; liveStatus.textContent='Mikrofon izni bekleniyor…';
+    liveButton.disabled = true;
+    liveError.textContent = '';
+    liveStatus.textContent = 'Mikrofon izni bekleniyor…';
+
     try {
-      stream=await getMic(); const ac=audioContext(); if(ac.state==='suspended') await ac.resume(); makeLiveGraph();
-      liveButton.textContent='⏹ Canlı modu durdur'; liveButton.classList.remove('primary'); liveButton.classList.add('stop'); liveStatus.textContent='CANLI — '+names[liveEffect];
-    } catch(e) { if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;} liveError.textContent=e.message||'Mikrofon başlatılamadı.'; liveStatus.textContent=''; }
-    finally { liveButton.disabled=false; }
+      micStream = await getMic();
+      await ensureRunning();
+      buildLiveGraph();
+
+      liveButton.textContent = '⏹ Canlı modu durdur';
+      liveButton.classList.remove('primary');
+      liveButton.classList.add('stop');
+      liveStatus.textContent = 'CANLI — ' + names[liveEffect];
+    } catch (err) {
+      stopLive(false);
+      liveError.textContent = err.name === 'NotAllowedError'
+        ? 'Mikrofon izni verilmedi. Tarayıcı adres çubuğundaki mikrofon simgesinden izin verin.'
+        : (err.message || 'Canlı ses başlatılamadı.');
+    } finally {
+      liveButton.disabled = false;
+    }
   }
-  function stopLive() {
-    disconnectLive(); if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}
-    liveButton.textContent='🎙️ Canlıya al';liveButton.classList.add('primary');liveButton.classList.remove('stop');liveStatus.textContent='';
+
+  function stopLive(resetStatus = true) {
+    disconnectLive();
+    if (micStream) {
+      micStream.getTracks().forEach(track => track.stop());
+      micStream = null;
+    }
+    liveButton.textContent = '🎙️ Canlıya al';
+    liveButton.classList.add('primary');
+    liveButton.classList.remove('stop');
+    if (resetStatus) liveStatus.textContent = '';
   }
+
   async function startRecording() {
-    recordButton.disabled=true;recordError.textContent='';recordStatus.textContent='Mikrofon izni bekleniyor…';
+    recordButton.disabled = true;
+    recordError.textContent = '';
+    recordStatus.textContent = 'Mikrofon izni bekleniyor…';
+
     try {
-      recordingStream=await getMic(); chunks=[];
-      const mime=['audio/webm;codecs=opus','audio/ogg;codecs=opus','audio/webm'].find(t=>window.MediaRecorder?.isTypeSupported?.(t));
-      if(!window.MediaRecorder) throw new Error('Bu tarayıcı ses kaydını desteklemiyor.');
-      recorder=new MediaRecorder(recordingStream,mime?{mimeType:mime}:undefined);
-      recorder.ondataavailable=e=>{if(e.data?.size)chunks.push(e.data);};
-      recorder.onerror=e=>{recordError.textContent=e.error?.message||'Kayıt sırasında hata oluştu.';};
-      recorder.onstop=async()=>{
-        recordingStream?.getTracks().forEach(t=>t.stop());recordingStream=null;
-        rawBlob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});chunks=[];
-        try { await transformRecording(recordEffect); }
-        catch(e){recordError.textContent='Ses dönüştürülemedi: '+(e.message||'Bilinmeyen hata');recordStatus.textContent='';}
+      recordStream = await getMic();
+      await ensureRunning();
+      mediaChunks = [];
+
+      const preferred = ['audio/webm;codecs=opus','audio/ogg;codecs=opus','audio/webm'];
+      const mimeType = preferred.find(type => window.MediaRecorder?.isTypeSupported(type));
+      mediaRecorder = new MediaRecorder(recordStream, mimeType ? {mimeType} : undefined);
+
+      mediaRecorder.ondataavailable = e => {
+        if (e.data?.size) mediaChunks.push(e.data);
       };
-      recorder.start(250);recordButton.textContent='⏹ Kaydı bitir';recordButton.classList.remove('primary');recordButton.classList.add('stop');recordStatus.textContent='Kayıt yapılıyor…';
-    } catch(e) {recordingStream?.getTracks().forEach(t=>t.stop());recordingStream=null;recordError.textContent=e.message||'Kayıt başlatılamadı.';recordStatus.textContent='';}
-    finally {recordButton.disabled=false;}
+
+      mediaRecorder.onerror = e => {
+        recordError.textContent = e.error?.message || 'Kayıt sırasında hata oluştu.';
+      };
+
+      mediaRecorder.onstop = async () => {
+        recordStream?.getTracks().forEach(track => track.stop());
+        recordStream = null;
+
+        rawBlob = new Blob(mediaChunks, {type: mediaRecorder.mimeType || 'audio/webm'});
+        mediaChunks = [];
+
++        if (rawBlob.size < 1200) {
++          recordStatus.textContent = '';
++          recordError.textContent = 'Kayıt çok kısa veya boş. En az bir saniye konuşup tekrar deneyin.';
++          return;
++        }
+
+        try {
+          await transformRecording(recordEffect);
+        } catch (err) {
+          recordStatus.textContent = '';
+          recordError.textContent = 'Ses dönüştürülemedi: ' + (err.message || 'Bilinmeyen hata');
+        }
+      };
+
+      mediaRecorder.start(250);
+      recordButton.textContent = '⏹ Kaydı bitir';
+      recordButton.classList.remove('primary');
+      recordButton.classList.add('stop');
+      recordStatus.textContent = 'Kayıt yapılıyor…';
+    } catch (err) {
+      recordStream?.getTracks().forEach(track => track.stop());
+      recordStream = null;
+      recordError.textContent = err.name === 'NotAllowedError'
+        ? 'Mikrofon izni verilmedi. Tarayıcı adres çubuğundaki mikrofon simgesinden izin verin.'
+        : (err.message || 'Kayıt başlatılamadı.');
+      recordStatus.textContent = '';
+    } finally {
+      recordButton.disabled = false;
+    }
   }
+
   function stopRecording() {
-    if(recorder&&recorder.state!=='inactive'){recordButton.disabled=true;recorder.stop();recordButton.textContent='🎙️ Sesli mesaj başlat';recordButton.classList.add('primary');recordButton.classList.remove('stop');recordStatus.textContent='Ses işleniyor…';}
+    if (!mediaRecorder || mediaRecorder.state === 'inactive') return;
+    recordButton.disabled = true;
+    mediaRecorder.stop();
+    recordButton.textContent = '🎙️ Sesli mesaj başlat';
+    recordButton.classList.add('primary');
+    recordButton.classList.remove('stop');
+    recordStatus.textContent = 'Ses temizleniyor ve dönüştürülüyor…';
   }
+
+  function createResampler(input, targetRate) {
+    if (input.sampleRate === targetRate) return input;
+    const duration = input.length / input.sampleRate;
+    const targetLength = Math.ceil(duration * targetRate);
+    const temp = getContext().createBuffer(input.numberOfChannels, targetLength, targetRate);
+
+    for (let channel = 0; channel < input.numberOfChannels; channel++) {
+      const sourceData = input.getChannelData(channel);
+      const targetData = temp.getChannelData(channel);
+      for (let i = 0; i < targetLength; i++) {
+        const pos = i * input.sampleRate / targetRate;
+        const index = Math.floor(pos);
+        const frac = pos - index;
+        const a = sourceData[index] || 0;
+        const b = sourceData[Math.min(index + 1, sourceData.length - 1)] || 0;
+        targetData[i] = a + (b - a) * frac;
+      }
+    }
+    return temp;
+  }
+
   async function transformRecording(effect) {
-    if(!rawBlob) return;
-    recordStatus.textContent='Ses dönüştürülüyor: '+names[effect]+'…';
-    const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)throw new Error('Web Audio API desteklenmiyor.');
-    const ac=new Ctx();
-    try {
-      const input=await ac.decodeAudioData(await rawBlob.arrayBuffer());
-      const p=presets[effect]||presets.original, rate=p.rate||1;
-      const duration=input.duration/rate;
-      const offline=new OfflineAudioContext(1,Math.max(1,Math.ceil(duration*input.sampleRate)),input.sampleRate);
-      const source=offline.createBufferSource();source.buffer=input;source.playbackRate.value=rate;
-      let last=source;
-      if(p.robot){const carrier=offline.createOscillator(), mod=offline.createGain();carrier.type='sawtooth';carrier.frequency.value=55;mod.gain.value=.35;carrier.connect(mod.gain);source.connect(mod);last=mod;carrier.start(0);}
-      const low=offline.createBiquadFilter();low.type='lowshelf';low.frequency.value=320;low.gain.value=p.low;
-      const mid=offline.createBiquadFilter();mid.type='peaking';mid.frequency.value=1400;mid.Q.value=.8;mid.gain.value=p.mid;
-      const high=offline.createBiquadFilter();high.type='highshelf';high.frequency.value=3200;high.gain.value=p.high;
-      const gain=offline.createGain();gain.gain.value=.88;
-      last.connect(low);low.connect(mid);mid.connect(high);high.connect(gain);gain.connect(offline.destination);source.start(0);
-      const rendered=await offline.startRendering();resultBlob=audioBufferToWav(rendered);
-      if(playerUrl)URL.revokeObjectURL(playerUrl);playerUrl=URL.createObjectURL(resultBlob);player.src=playerUrl;player.load();
-      recordStatus.textContent='Dönüştürüldü: '+names[effect];
-    } finally {await ac.close().catch(()=>{});}
+    if (!rawBlob) return;
+
+    recordStatus.textContent = 'Ses dönüştürülüyor: ' + names[effect] + '…';
+
+    const decodeContext = getContext();
+    const input = await decodeContext.decodeAudioData(await rawBlob.arrayBuffer());
+    const normalized = createResampler(input, 48000);
+
+    const duration = normalized.length / normalized.sampleRate;
+    const offline = new OfflineAudioContext(1, Math.max(1, Math.ceil(duration * normalized.sampleRate)), normalized.sampleRate);
+    const source = offline.createBufferSource();
+    source.buffer = normalized;
+
+    const preset = presets[effect] || presets.original;
+    source.playbackRate.value = preset.pitch;
+
+    let last = source;
+
+    if (preset.robot) {
+      const carrier = offline.createOscillator();
+      const mod = offline.createGain();
+      carrier.type = 'square';
+      carrier.frequency.value = 62;
+      mod.gain.value = .28;
+      carrier.connect(mod.gain);
+      source.connect(mod);
+      last = mod;
+      carrier.start(0);
+    } else {
+      const highpass = offline.createBiquadFilter();
+      highpass.type = 'highpass';
+      highpass.frequency.value = 70;
+      highpass.Q.value = .7;
+      last.connect(highpass);
+      last = highpass;
+    }
+
+    const low = offline.createBiquadFilter();
+    low.type = 'lowshelf';
+    low.frequency.value = 300;
+    low.gain.value = preset.low;
+
+    const mid = offline.createBiquadFilter();
+    mid.type = 'peaking';
+    mid.frequency.value = 1800;
+    mid.Q.value = .85;
+    mid.gain.value = preset.mid;
+
+    const high = offline.createBiquadFilter();
+    high.type = 'highshelf';
+    high.frequency.value = 5000;
+    high.gain.value = preset.high;
+
+    const compressor = offline.createDynamicsCompressor();
+    compressor.threshold.value = -18;
+    compressor.knee.value = 18;
+    compressor.ratio.value = 3;
+    compressor.attack.value = .005;
+    compressor.release.value = .18;
+
+    const master = offline.createGain();
+    master.gain.value = preset.gain;
+
+    last.connect(low);
+    low.connect(mid);
+    mid.connect(high);
+    high.connect(compressor);
+    compressor.connect(master);
+    master.connect(offline.destination);
+
+    source.start(0);
+    const rendered = await offline.startRendering();
+    resultBlob = audioBufferToWav(rendered);
+
+    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    resultUrl = URL.createObjectURL(resultBlob);
+    player.src = resultUrl;
+    player.load();
+    recordStatus.textContent = 'Dönüştürüldü: ' + names[effect];
   }
+
   function audioBufferToWav(buffer) {
-    const channels=buffer.numberOfChannels, frames=buffer.length, bytes=44+frames*channels*2, out=new ArrayBuffer(bytes), v=new DataView(out);
-    const str=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i));};
-    str(0,'RIFF');v.setUint32(4,bytes-8,true);str(8,'WAVE');str(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,channels,true);v.setUint32(24,buffer.sampleRate,true);v.setUint32(28,buffer.sampleRate*channels*2,true);v.setUint16(32,channels*2,true);v.setUint16(34,16,true);str(36,'data');v.setUint32(40,bytes-44,true);
-    const data=Array.from({length:channels},(_,i)=>buffer.getChannelData(i));let offset=44;
-    for(let i=0;i<frames;i++)for(let c=0;c<channels;c++){const s=Math.max(-1,Math.min(1,data[c][i]));v.setInt16(offset,s<0?s*0x8000:s*0x7fff,true);offset+=2;}
-    return new Blob([out],{type:'audio/wav'});
+    const channels = buffer.numberOfChannels;
+    const frames = buffer.length;
+    const bytes = 44 + frames * channels * 2;
+    const out = new ArrayBuffer(bytes);
+    const view = new DataView(out);
+
+    const write = (offset, text) => {
+      for (let i = 0; i < text.length; i++) view.setUint8(offset + i, text.charCodeAt(i));
+    };
+
+    write(0, 'RIFF');
+    view.setUint32(4, bytes - 8, true);
+    write(8, 'WAVE');
+    write(12, 'fmt ');
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, channels, true);
+    view.setUint32(24, buffer.sampleRate, true);
+    view.setUint32(28, buffer.sampleRate * channels * 2, true);
+    view.setUint16(32, channels * 2, true);
+    view.setUint16(34, 16, true);
+    write(36, 'data');
+    view.setUint32(40, bytes - 44, true);
+
+    const data = Array.from({length: channels}, (_, i) => buffer.getChannelData(i));
+    let offset = 44;
+
+    for (let i = 0; i < frames; i++) {
+      for (let c = 0; c < channels; c++) {
+        const sample = Math.max(-1, Math.min(1, data[c][i]));
+        view.setInt16(offset, sample < 0 ? sample * 32768 : sample * 32767, true);
+        offset += 2;
+      }
+    }
+    return new Blob([out], {type:'audio/wav'});
   }
-  function selectEffect(group,effect) {
-    if(!presets[effect])return;
-    group.querySelectorAll('button').forEach(b=>b.classList.toggle('selected',b.dataset.effect===effect));
+
+  function selectEffect(group, effect) {
+    if (!presets[effect]) return;
+    group.querySelectorAll('button').forEach(b => b.classList.toggle('selected', b.dataset.effect === effect));
   }
-  liveButton.addEventListener('click',()=>stream?stopLive():startLive());
-  $$('#liveEffects button').forEach(b=>b.addEventListener('click',()=>{liveEffect=b.dataset.effect;selectEffect($('#liveEffects'),liveEffect);if(stream){try{makeLiveGraph();liveStatus.textContent='CANLI — '+names[liveEffect];}catch(e){liveError.textContent=e.message;}}}));
-  $('#volume').addEventListener('input',e=>{$('#volumeValue').textContent=e.target.value+'%';if(liveGain)liveGain.gain.setTargetAtTime(Number(e.target.value)/100,audioContext().currentTime,.015);});
-  recordButton.addEventListener('click',()=>recorder?.state==='recording'?stopRecording():startRecording());
-  $$('#recordEffects button').forEach(b=>b.addEventListener('click',async()=>{recordEffect=b.dataset.effect;selectEffect($('#recordEffects'),recordEffect);if(rawBlob){try{await transformRecording(recordEffect);}catch(e){recordError.textContent='Ses dönüştürülemedi: '+e.message;}}}));
-  $('#downloadButton').addEventListener('click',()=>{if(!resultBlob){recordError.textContent='Önce bir kayıt yapın.';return;}const a=document.createElement('a');a.href=URL.createObjectURL(resultBlob);a.download='sesli-mesaj-'+recordEffect+'.wav';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});
-  $('#newButton').addEventListener('click',()=>{if(recorder?.state==='recording')stopRecording();rawBlob=resultBlob=null;chunks=[];player.pause();player.removeAttribute('src');player.load();if(playerUrl){URL.revokeObjectURL(playerUrl);playerUrl=null;}recordStatus.textContent='';recordError.textContent='';});
-  window.addEventListener('pagehide',()=>{stopLive();if(recordingStream)recordingStream.getTracks().forEach(t=>t.stop());if(playerUrl)URL.revokeObjectURL(playerUrl);});
+
+  liveButton.addEventListener('click', () => micStream ? stopLive() : startLive());
+
+  $$('#liveEffects button').forEach(button => {
+    button.addEventListener('click', () => {
+      liveEffect = button.dataset.effect;
+      selectEffect($('#liveEffects'), liveEffect);
+      if (micStream) {
+        try {
+          buildLiveGraph();
+          liveStatus.textContent = 'CANLI — ' + names[liveEffect];
+        } catch (err) {
+          liveError.textContent = err.message;
+        }
+      }
+    });
+  });
+
+  $('#volume').addEventListener('input', e => {
+    $('#volumeValue').textContent = e.target.value + '%';
+    if (liveGain) {
+      const preset = presets[liveEffect] || presets.baby;
+      liveGain.gain.setTargetAtTime((Number(e.target.value) / 100) * preset.gain, getContext().currentTime, .015);
+    }
+  });
+
+  recordButton.addEventListener('click', () => {
+    if (mediaRecorder?.state === 'recording') stopRecording();
+    else startRecording();
+  });
+
+  $$('#recordEffects button').forEach(button => {
+    button.addEventListener('click', async () => {
+      recordEffect = button.dataset.effect;
+      selectEffect($('#recordEffects'), recordEffect);
+      if (rawBlob) {
+        try { await transformRecording(recordEffect); }
+        catch (err) { recordError.textContent = 'Ses dönüştürülemedi: ' + err.message; }
+      }
+    });
+  });
+
+  $('#downloadButton').addEventListener('click', () => {
+    if (!resultBlob) {
+      recordError.textContent = 'Önce bir kayıt yapın.';
+      return;
+    }
+    const url = URL.createObjectURL(resultBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sesli-mesaj-' + recordEffect + '.wav';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 1000);
+  });
+
+  $('#newButton').addEventListener('click', () => {
+    if (mediaRecorder?.state === 'recording') stopRecording();
+    rawBlob = resultBlob = null;
+    mediaChunks = [];
+    player.pause();
+    player.removeAttribute('src');
+    player.load();
+    if (resultUrl) {
+      URL.revokeObjectURL(resultUrl);
+      resultUrl = null;
+    }
+    recordStatus.textContent = '';
+    recordError.textContent = '';
+  });
+
+  window.addEventListener('pagehide', () => {
+    stopLive(false);
+    if (recordStream) recordStream.getTracks().forEach(track => track.stop());
+    if (resultUrl) URL.revokeObjectURL(resultUrl);
+  });
 })();
 </script>
 </body>

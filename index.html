@@ -207,7 +207,7 @@
     }
     .effects {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 10px;
     }
     .effect {
@@ -937,6 +937,11 @@
           <strong data-i18n="funny">Komik</strong>
           <small data-i18n="funnyDesc">Tiz ve enerjik (Helyum)</small>
         </button>
+        <button class="effect" type="button" data-effect="original" aria-pressed="false">
+          <span class="effect-icon">🎤</span>
+          <strong data-i18n="original">Orijinal</strong>
+          <small data-i18n="originalDesc">Doğal kendi sesin</small>
+        </button>
       </div>
 
       <div class="bottom-row">
@@ -979,8 +984,9 @@
 
 <script>
 /* =========================================================
-     RealtimeVoice — Audio Engine & Voice Message Studio
-     ========================================================= */
+   RealtimeVoice — Audio Engine & Voice Message Studio V3
+   Crystal Clear DSP & Multi-Platform Audio Architecture
+   ========================================================= */
 
   const translations = {
     tr: {
@@ -1011,6 +1017,8 @@
       deepDesc: 'Derin, tok ve ağır ton',
       funny: 'Komik',
       funnyDesc: 'Hızlı ve çizgi film havası',
+      original: 'Orijinal',
+      originalDesc: 'Doğal kendi sesin',
       volumeLabel: 'Çıkış sesi',
       errorHeading: 'Bir sorun oluştu',
       errorMic: 'Mikrofon izni verilmedi veya zaman aşımına uğradı. Lütfen tarayıcı izinlerinden mikrofonu açıp tekrar deneyin.',
@@ -1048,113 +1056,117 @@
       languageLabel: 'Language',
       localTag: '●&nbsp; Processed on device',
       eyebrow: 'Live voice studio in your browser',
-      title: 'Give your voice<br>a new vibe.',
-      subtitle: 'Choose an effect, turn on your microphone, and hear your voice instantly. No recording; your audio is never sent to a server.',
+      title: 'Give your voice<br>a whole new vibe.',
+      subtitle: 'Pick an effect, turn on your mic and hear yourself instantly. No recording; audio stays local.',
       studioLabel: 'Live voice changer',
-      visualizerLabel: 'Live audio visualizer',
-      visualLabel: 'Live waveform appears here when started',
+      visualizerLabel: 'Live audio waveform visualizer',
+      visualLabel: 'Waveform appears here when live',
       live: 'LIVE',
-      startButton: '🎙️ &nbsp; Go Live',
-      startingButton: 'Waiting for mic…',
+      startButton: '🎙️ &nbsp; Go live',
+      startingButton: 'Waiting for mic permission…',
       connectingButton: 'Starting audio…',
-      stopButton: '■ &nbsp; Stop Live Audio',
-      retryButton: '🎙️ &nbsp; Retry',
+      stopButton: '■ &nbsp; Stop live mode',
+      retryButton: '🎙️ &nbsp; Try again',
       effectsHeading: 'VOICE EFFECTS',
-      effectsHint: 'Effects change in real time',
-      effectsLabel: 'Choose a voice effect',
+      effectsHint: 'Effects switch in real-time',
+      effectsLabel: 'Choose voice effect',
       baby: 'Baby',
       babyDesc: 'High-pitched cute tone',
       robot: 'Robot',
-      robotDesc: 'Metallic cybernetic voice',
+      robotDesc: 'Metallic cyber voice',
       deep: 'Deep',
-      deepDesc: 'Low, heavy and resonant',
+      deepDesc: 'Low and resonant tone',
       funny: 'Funny',
-      funnyDesc: 'Fast chipmunk cartoon vibe',
+      funnyDesc: 'Fast cartoon / helium vibe',
+      original: 'Original',
+      originalDesc: 'Your natural voice',
       volumeLabel: 'Output volume',
       errorHeading: 'Something went wrong',
-      errorMic: 'Microphone permission was denied or timed out. Please allow microphone access in browser settings.',
-      errorAudio: 'Could not initialize browser audio engine.',
+      errorMic: 'Microphone permission denied or timed out. Please allow mic access in your browser settings.',
+      errorAudio: 'Could not start audio engine.',
       errorGeneric: 'An unexpected error occurred.',
-      permModalTitle: 'Microphone Access Required',
-      permModalDesc: 'This app needs microphone access to transform your voice in real time and create voice notes. Once allowed, you can start immediately.',
-      permModalAllow: '🎙️ &nbsp; Turn On Mic & Start',
+      permModalTitle: 'Microphone Permission Needed',
+      permModalDesc: 'This app needs access to your microphone to transform your voice in real time and create voice notes.',
+      permModalAllow: '🎙️ &nbsp; Enable Mic & Start',
       permModalDeny: 'Later',
 
       // Voice Studio keys
-      studioTitle: 'Create Voice Message with Effects',
-      studioDesc: 'Speak as much as you want, transform into any voice effect, and share directly.',
+      studioTitle: 'Create Voice Note with Effects',
+      studioDesc: 'Speak as long as you want, then pick an effect and share it with friends.',
       badgeReady: 'Ready',
       badgeRecording: 'Recording',
       recordStart: '🎙️ &nbsp; Start Voice Note',
-      recordStop: '⏹️ &nbsp; Stop & Pick Effect',
+      recordStop: '⏹️ &nbsp; Stop & Transform',
       recordHint: 'Speak freely as long as you want. Tap again to stop and transform.',
-      whichEffectLabel: '✨ CHOOSE VOICE EFFECT TO TRANSFORM:',
+      whichEffectLabel: '✨ CHOOSE EFFECT TO APPLY:',
       chipBaby: 'Baby',
       chipRobot: 'Robot',
-      chipDeep: 'Deep Boss',
+      chipDeep: 'Deep & Heavy',
       chipFunny: 'Funny',
       chipOriginal: 'Original',
       transformedVoiceLabel: 'Transformed Voice:',
-      shareVoiceNote: '📤 &nbsp; Share as Voice Message',
+      shareVoiceNote: '📤 &nbsp; Share as Voice Note',
       downloadWav: '💾 &nbsp; Download (.wav)',
       newRecording: '🔄 &nbsp; Record Again',
-      shareSuccess: 'Voice message shared successfully!',
-      shareFallback: 'Audio file downloaded! You can share it on WhatsApp or Telegram.'
+      shareSuccess: 'Voice note shared successfully!',
+      shareFallback: 'Audio file downloaded! You can drag & drop it into WhatsApp or Telegram as a voice note.'
     },
     ru: {
-      pageTitle: 'Realtime Voice — Измени свой голос',
-      description: 'Попробуйте голосовые эффекты в реальном времени. Звук не покидает устройство.',
+      pageTitle: 'Realtime Voice — Измени голос',
+      description: 'Голосовые эффекты в реальном времени. Аудио не покидает устройство.',
       languageLabel: 'Язык',
       localTag: '●&nbsp; Обработка на устройстве',
-      eyebrow: 'Студия голоса прямо в браузере',
+      eyebrow: 'Студия голоса в браузере',
       title: 'Придай голосу<br>новое звучание.',
-      subtitle: 'Выбери эффект, включи микрофон и сразу слушай себя. Без записи и серверов.',
-      studioLabel: 'Модулятор голоса онлайн',
-      visualizerLabel: 'Визуализатор звука',
-      visualLabel: 'Волна звука появится здесь при включении',
-      live: 'В ЭФИРЕ',
-      startButton: '🎙️ &nbsp; Включить микрофон',
+      subtitle: 'Выбери эффект, включи микрофон и слушай себя в реальном времени.',
+      studioLabel: 'Модулятор голоса',
+      visualizerLabel: 'Визуализация волны',
+      visualLabel: 'Волна появится при включении микрофона',
+      live: 'ЭФИР',
+      startButton: '🎙️ &nbsp; В прямой эфир',
       startingButton: 'Ожидание микрофона…',
-      connectingButton: 'Запуск звука…',
+      connectingButton: 'Запуск аудио…',
       stopButton: '■ &nbsp; Остановить эфир',
       retryButton: '🎙️ &nbsp; Повторить',
       effectsHeading: 'ГОЛОСОВЫЕ ЭФФЕКТЫ',
-      effectsHint: 'Эффекты меняются мгновенно',
+      effectsHint: 'Эффекты переключаются на лету',
       effectsLabel: 'Выбор эффекта',
       baby: 'Малыш',
-      babyDesc: 'Высокий детский голос',
+      babyDesc: 'Высокий звонкий голос',
       robot: 'Робот',
       robotDesc: 'Металлический кибер-голос',
       deep: 'Бас',
-      deepDesc: 'Глубокий тяжелый тон',
-      funny: 'Смешной',
-      funnyDesc: 'Быстрый мультяшный голос',
+      deepDesc: 'Глубокий низкий тембр',
+      funny: 'Мультяшный',
+      funnyDesc: 'Быстрый гелиевый тон',
+      original: 'Оригинал',
+      originalDesc: 'Естественный голос',
       volumeLabel: 'Громкость',
       errorHeading: 'Произошла ошибка',
       errorMic: 'Доступ к микрофону отклонен или истекло время ожидания.',
-      errorAudio: 'Не удалось запустить аудио-движок.',
+      errorAudio: 'Не удалось инициализировать аудио движок.',
       errorGeneric: 'Произошла непредвиденная ошибка.',
       permModalTitle: 'Требуется доступ к микрофону',
-      permModalDesc: 'Приложению нужен микрофон для обработки голоса и записи аудиосообщений.',
-      permModalAllow: '🎙️ &nbsp; Включить микрофон',
+      permModalDesc: 'Приложению необходим микрофон для преобразования голоса на лету и отправки голосовых сообщений.',
+      permModalAllow: '🎙️ &nbsp; Разрешить микрофон',
       permModalDeny: 'Позже',
 
       // Voice Studio keys
-      studioTitle: 'Создать голосовое с эффектом',
-      studioDesc: 'Говорите сколько угодно, выберите эффект и отправьте друзьям.',
-      badgeReady: 'Готово',
-      badgeRecording: 'Запись',
+      studioTitle: 'Создать голосовое сообщение',
+      studioDesc: 'Говорите сколько угодно, затем выберите эффект и отправьте друзьям.',
+      badgeReady: 'Готов',
+      badgeRecording: 'Запись…',
       recordStart: '🎙️ &nbsp; Начать запись',
       recordStop: '⏹️ &nbsp; Завершить и выбрать эффект',
-      recordHint: 'Говорите сколько угодно. Нажмите снова, чтобы завершить.',
-      whichEffectLabel: '✨ ВЫБЕРИТЕ ЭФФЕКТ ДЛЯ ПРЕОБРАЗОВАНИЯ:',
+      recordHint: 'Говорите свободно. Нажмите еще раз, чтобы остановить запись.',
+      whichEffectLabel: '✨ ВЫБЕРИТЕ ЭФФЕКТ ДЛЯ ГОЛОСА:',
       chipBaby: 'Малыш',
       chipRobot: 'Робот',
-      chipDeep: 'Бас',
+      chipDeep: 'Глубокий бас',
       chipFunny: 'Смешной',
       chipOriginal: 'Оригинал',
-      transformedVoiceLabel: 'Преобразованный голос:',
-      shareVoiceNote: '📤 &nbsp; Отправить голосовое сообщение',
+      transformedVoiceLabel: 'Обработанный голос:',
+      shareVoiceNote: '📤 &nbsp; Отправить голосовым сообщением',
       downloadWav: '💾 &nbsp; Скачать (.wav)',
       newRecording: '🔄 &nbsp; Записать заново',
       shareSuccess: 'Голосовое сообщение отправлено!',
@@ -1209,9 +1221,12 @@
   let liveAnalyser = null;
   let liveVolumeNode = null;
   let livePitchShifter = null;
-  let liveRobotCarrier = null;
+  let livePitchGain = null;
+  let liveRobotProcessor = null;
   let liveRobotGain = null;
+  let liveDirectGain = null;
   let liveFilters = {};
+  let liveCompressor = null;
   let isLiveRunning = false;
   let liveBusy = false;
   let liveStartedAt = 0;
@@ -1230,12 +1245,12 @@
   let currentWavBlob = null;
   let currentSelectedEffect = 'baby';
 
-  // Presets configuration
+  // Tuned Preset Configurations for Crystal Clear Sound
   const presets = {
-    baby: { pitch: 0.58, low: -2, mid: 3, high: 6, robot: false },
-    robot: { pitch: 0.0, low: 2, mid: 4, high: 2, robot: true },
-    deep: { pitch: -0.45, low: 8, mid: -1, high: -6, robot: false },
-    funny: { pitch: 0.85, low: -6, mid: 5, high: 8, robot: false },
+    baby: { pitch: 0.60, low: -4, mid: 2, high: 4, robot: false },
+    robot: { pitch: 0.0, low: 2, mid: 6, high: -2, robot: true },
+    deep: { pitch: -0.42, low: 5, mid: -1, high: -5, robot: false },
+    funny: { pitch: 0.85, low: -6, mid: 4, high: 6, robot: false },
     original: { pitch: 0.0, low: 0, mid: 0, high: 0, robot: false }
   };
 
@@ -1265,7 +1280,7 @@
     }, duration);
   }
 
-  /* --- Jungle Pitch Shifter (Granular Delay) --- */
+  /* --- Jungle Pitch Shifter (Dual Delay with Constant-Power Crossfade) --- */
   function createFadeBuffer(ac, activeTime, fadeTime) {
     const length1 = Math.round(activeTime * ac.sampleRate);
     const length2 = Math.round((activeTime - 2 * fadeTime) * ac.sampleRate);
@@ -1293,95 +1308,206 @@
     const p = buffer.getChannelData(0);
 
     for (let i = 0; i < length1; ++i) {
-      p[i] = shiftUp ? (length1 - i) / length1 : i / length1;
+      p[i] = shiftUp ? (length1 - i) / length : i / length1;
     }
     for (let i = length1; i < length; ++i) p[i] = 0;
     return buffer;
   }
 
   function createJungleNode(ac) {
-    const delayTime = 0.1;
-    const fadeTime = 0.05;
-    const bufferTime = 0.1;
+    const delayTime = 0.100;
+    const fadeTime = 0.050;
+    const bufferTime = 0.100;
 
     const input = ac.createGain();
     const output = ac.createGain();
-    const mod1 = ac.createBufferSource();
-    const mod2 = ac.createBufferSource();
-    const mod3 = ac.createBufferSource();
-    const mod4 = ac.createBufferSource();
+
     const shiftDownBuffer = createDelayTimeBuffer(ac, bufferTime, fadeTime, false);
     const shiftUpBuffer = createDelayTimeBuffer(ac, bufferTime, fadeTime, true);
     const fadeBuffer = createFadeBuffer(ac, bufferTime, fadeTime);
 
-    mod1.buffer = fadeBuffer;
-    mod2.buffer = fadeBuffer;
+    const mod1 = ac.createBufferSource();
+    const mod2 = ac.createBufferSource();
+    const mod3 = ac.createBufferSource();
+    const mod4 = ac.createBufferSource();
+
+    mod1.buffer = shiftDownBuffer;
+    mod2.buffer = shiftDownBuffer;
+    mod3.buffer = shiftUpBuffer;
+    mod4.buffer = shiftUpBuffer;
+
     mod1.loop = true;
     mod2.loop = true;
+    mod3.loop = true;
+    mod4.loop = true;
 
     const mod1Gain = ac.createGain();
     const mod2Gain = ac.createGain();
-    mod1Gain.gain.value = 0;
-    mod2Gain.gain.value = 0;
-
-    mod1.connect(mod1Gain.gain);
-    mod2.connect(mod2Gain.gain);
-
     const mod3Gain = ac.createGain();
     const mod4Gain = ac.createGain();
+
     mod3Gain.gain.value = 0;
     mod4Gain.gain.value = 0;
 
-    const delay1 = ac.createDelay(1);
-    const delay2 = ac.createDelay(1);
+    mod1.connect(mod1Gain);
+    mod2.connect(mod2Gain);
+    mod3.connect(mod3Gain);
+    mod4.connect(mod4Gain);
+
+    const modGain1 = ac.createGain();
+    const modGain2 = ac.createGain();
+    modGain1.gain.value = 0;
+    modGain2.gain.value = 0;
+
+    const delay1 = ac.createDelay(1.0);
+    const delay2 = ac.createDelay(1.0);
     delay1.delayTime.value = 0;
     delay2.delayTime.value = 0;
 
-    mod3.connect(mod3Gain.gain);
-    mod4.connect(mod4Gain.gain);
-    mod3Gain.connect(delay1.delayTime);
-    mod4Gain.connect(delay2.delayTime);
+    mod1Gain.connect(modGain1);
+    mod2Gain.connect(modGain2);
+    mod3Gain.connect(modGain1);
+    mod4Gain.connect(modGain2);
+
+    modGain1.connect(delay1.delayTime);
+    modGain2.connect(delay2.delayTime);
+
+    const fade1 = ac.createBufferSource();
+    const fade2 = ac.createBufferSource();
+    fade1.buffer = fadeBuffer;
+    fade2.buffer = fadeBuffer;
+    fade1.loop = true;
+    fade2.loop = true;
+
+    const mix1 = ac.createGain();
+    const mix2 = ac.createGain();
+    mix1.gain.value = 0;
+    mix2.gain.value = 0;
+
+    fade1.connect(mix1.gain);
+    fade2.connect(mix2.gain);
 
     input.connect(delay1);
     input.connect(delay2);
-    delay1.connect(mod1Gain);
-    delay2.connect(mod2Gain);
-    mod1Gain.connect(output);
-    mod2Gain.connect(output);
+    delay1.connect(mix1);
+    delay2.connect(mix2);
+    mix1.connect(output);
+    mix2.connect(output);
 
-    const now = ac.currentTime || 0;
+    const now = (ac.currentTime || 0) + 0.050;
+    const halfPeriod = bufferTime - fadeTime;
     mod1.start(now);
-    mod2.start(now + bufferTime / 2);
+    mod2.start(now + halfPeriod);
     mod3.start(now);
-    mod4.start(now + bufferTime / 2);
+    mod4.start(now + halfPeriod);
+    fade1.start(now);
+    fade2.start(now + halfPeriod);
 
     function setPitchOffset(mult) {
       if (mult > 0) {
-        mod3.buffer = shiftUpBuffer;
-        mod4.buffer = shiftUpBuffer;
+        mod1Gain.gain.value = 0;
+        mod2Gain.gain.value = 0;
+        mod3Gain.gain.value = 1;
+        mod4Gain.gain.value = 1;
+      } else if (mult < 0) {
+        mod1Gain.gain.value = 1;
+        mod2Gain.gain.value = 1;
+        mod3Gain.gain.value = 0;
+        mod4Gain.gain.value = 0;
       } else {
-        mod3.buffer = shiftDownBuffer;
-        mod4.buffer = shiftDownBuffer;
+        mod1Gain.gain.value = 0;
+        mod2Gain.gain.value = 0;
+        mod3Gain.gain.value = 0;
+        mod4Gain.gain.value = 0;
       }
-      const val = Math.abs(mult * 0.05);
-      mod3Gain.gain.value = val;
-      mod4Gain.gain.value = val;
+      const val = 0.5 * delayTime * Math.abs(mult);
+      if (ac.state === 'running' || ac.state === 'suspended') {
+        try {
+          modGain1.gain.setTargetAtTime(val, ac.currentTime, 0.010);
+          modGain2.gain.setTargetAtTime(val, ac.currentTime, 0.010);
+        } catch (_) {
+          modGain1.gain.value = val;
+          modGain2.gain.value = val;
+        }
+      } else {
+        modGain1.gain.value = val;
+        modGain2.gain.value = val;
+      }
     }
 
-    return { input, output, setPitchOffset };
+    function stop() {
+      [mod1, mod2, mod3, mod4, fade1, fade2].forEach(n => {
+        try { n.stop(); } catch (_) {}
+        try { n.disconnect(); } catch (_) {}
+      });
+      try { input.disconnect(); } catch (_) {}
+      try { output.disconnect(); } catch (_) {}
+    }
+
+    return { input, output, setPitchOffset, stop };
   }
 
-  function makeDistortionCurve(sampleRate, amount) {
-    if (!amount) return null;
-    const k = typeof amount === 'number' ? amount : 25;
-    const n = sampleRate || 44100;
-    const curve = new Float32Array(n);
-    const deg = Math.PI / 180;
-    for (let i = 0; i < n; ++i) {
-      const x = (i * 2) / n - 1;
-      curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+  /* --- Robot Voice Processor (Sine Ring Modulation + Metallic Resonance) --- */
+  function createRobotNode(ac) {
+    const input = ac.createGain();
+    const output = ac.createGain();
+
+    const carrier = ac.createOscillator();
+    carrier.type = 'sine';
+    carrier.frequency.value = 55;
+
+    const carrierDepth = ac.createGain();
+    carrierDepth.gain.value = 0.60;
+
+    const ringGain = ac.createGain();
+    ringGain.gain.value = 0.40;
+
+    carrier.connect(carrierDepth);
+    carrierDepth.connect(ringGain.gain);
+
+    const metallicFilter = ac.createBiquadFilter();
+    metallicFilter.type = 'peaking';
+    metallicFilter.frequency.value = 1350;
+    metallicFilter.Q.value = 3.0;
+    metallicFilter.gain.value = 6;
+
+    input.connect(ringGain);
+    ringGain.connect(metallicFilter);
+    metallicFilter.connect(output);
+
+    const now = ac.currentTime || 0;
+    carrier.start(now);
+
+    function stop() {
+      try { carrier.stop(); } catch (_) {}
+      try { carrier.disconnect(); } catch (_) {}
+      try { input.disconnect(); } catch (_) {}
+      try { output.disconnect(); } catch (_) {}
     }
-    return curve;
+
+    return { input, output, stop };
+  }
+
+  /* --- Peak Normalization to Prevent Digital Clipping --- */
+  function normalizeAudioBuffer(buffer, targetPeak = 0.95) {
+    if (!buffer) return;
+    let maxVal = 0;
+    for (let c = 0; c < buffer.numberOfChannels; c++) {
+      const data = buffer.getChannelData(c);
+      for (let i = 0; i < data.length; i++) {
+        const abs = Math.abs(data[i]);
+        if (abs > maxVal) maxVal = abs;
+      }
+    }
+    if (maxVal > 0.001) {
+      const normFactor = Math.min(Math.max(targetPeak / maxVal, 0.25), 3.0);
+      for (let c = 0; c < buffer.numberOfChannels; c++) {
+        const data = buffer.getChannelData(c);
+        for (let i = 0; i < data.length; i++) {
+          data[i] = Math.max(-1, Math.min(1, data[i] * normFactor));
+        }
+      }
+    }
   }
 
   /* --- 16-bit PCM WAV File Encoder --- */
@@ -1437,11 +1563,10 @@
     }
 
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('TIMEOUT')), 7000);
+      setTimeout(() => reject(new Error('TIMEOUT')), 8000);
     });
 
     try {
-      // 1. Try with echoCancellation and noiseSuppression
       const streamPromise = navigator.mediaDevices.getUserMedia({
         audio: { echoCancellation: true, noiseSuppression: true }
       });
@@ -1450,7 +1575,6 @@
       return micStream;
     } catch (e1) {
       if (e1.message === 'TIMEOUT') throw e1;
-      // 2. Fallback to basic audio: true for mobile WebViews
       try {
         const fallbackPromise = navigator.mediaDevices.getUserMedia({ audio: true });
         micStream = await Promise.race([fallbackPromise, timeoutPromise]);
@@ -1490,35 +1614,61 @@
       liveAnalyser = ac.createAnalyser();
       liveAnalyser.fftSize = 512;
 
+      // Output Volume (normalized 0.0 - 1.0, default 0.75)
+      const rawVol = volumeSlider ? parseFloat(volumeSlider.value) : 75;
+      const initialVol = rawVol > 1 ? rawVol / 100 : rawVol;
       liveVolumeNode = ac.createGain();
-      liveVolumeNode.gain.value = volumeSlider ? parseFloat(volumeSlider.value) : 1;
+      liveVolumeNode.gain.value = initialVol;
 
-      // Pitch shifter & filters
+      // 3-branch processing graph: Pitch, Robot, Direct
       livePitchShifter = createJungleNode(ac);
+      livePitchGain = ac.createGain();
+      livePitchGain.gain.value = 1.0;
+      livePitchShifter.output.connect(livePitchGain);
+
+      liveRobotProcessor = createRobotNode(ac);
+      liveRobotGain = ac.createGain();
+      liveRobotGain.gain.value = 0.0;
+      liveRobotProcessor.output.connect(liveRobotGain);
+
+      liveDirectGain = ac.createGain();
+      liveDirectGain.gain.value = 0.0;
+
+      // Connect mic to all 3 branches
+      liveSource.connect(livePitchShifter.input);
+      liveSource.connect(liveRobotProcessor.input);
+      liveSource.connect(liveDirectGain);
+
+      // Multi-band EQ stage
       liveFilters.low = ac.createBiquadFilter();
       liveFilters.low.type = 'lowshelf';
-      liveFilters.low.frequency.value = 320;
+      liveFilters.low.frequency.value = 260;
 
       liveFilters.mid = ac.createBiquadFilter();
       liveFilters.mid.type = 'peaking';
-      liveFilters.mid.frequency.value = 1400;
+      liveFilters.mid.frequency.value = 1600;
 
       liveFilters.high = ac.createBiquadFilter();
       liveFilters.high.type = 'highshelf';
       liveFilters.high.frequency.value = 3200;
 
-      liveRobotCarrier = ac.createOscillator();
-      liveRobotCarrier.type = 'sawtooth';
-      liveRobotCarrier.frequency.value = 55;
-      liveRobotGain = ac.createGain();
-      liveRobotGain.gain.value = 0.5;
+      // Studio dynamics compressor to eliminate clipping & feedback screech
+      liveCompressor = ac.createDynamicsCompressor();
+      liveCompressor.threshold.value = -14;
+      liveCompressor.knee.value = 10;
+      liveCompressor.ratio.value = 6;
+      liveCompressor.attack.value = 0.003;
+      liveCompressor.release.value = 0.15;
 
-      // Connect chain
-      liveSource.connect(livePitchShifter.input);
-      livePitchShifter.output.connect(liveFilters.low);
+      // Sum branches into EQ -> Compressor -> Volume -> Analyser -> Speakers
+      livePitchGain.connect(liveFilters.low);
+      liveRobotGain.connect(liveFilters.low);
+      liveDirectGain.connect(liveFilters.low);
+
       liveFilters.low.connect(liveFilters.mid);
       liveFilters.mid.connect(liveFilters.high);
-      liveFilters.high.connect(liveVolumeNode);
+      liveFilters.high.connect(liveCompressor);
+      liveCompressor.connect(liveVolumeNode);
       liveVolumeNode.connect(liveAnalyser);
       liveAnalyser.connect(ac.destination);
 
@@ -1554,32 +1704,49 @@
       try { liveSource.disconnect(); } catch (_) {}
       liveSource = null;
     }
-    if (livePitchShifter && livePitchShifter.output) {
-      try { livePitchShifter.output.disconnect(); } catch (_) {}
+    if (livePitchShifter) {
+      try { livePitchShifter.stop(); } catch (_) {}
       livePitchShifter = null;
     }
-    if (liveVolumeNode) {
-      try { liveVolumeNode.disconnect(); } catch (_) {}
-      liveVolumeNode = null;
+    if (liveRobotProcessor) {
+      try { liveRobotProcessor.stop(); } catch (_) {}
+      liveRobotProcessor = null;
     }
-    if (liveAnalyser) {
-      try { liveAnalyser.disconnect(); } catch (_) {}
-      liveAnalyser = null;
-    }
+    if (livePitchGain) { try { livePitchGain.disconnect(); } catch (_) {} livePitchGain = null; }
+    if (liveRobotGain) { try { liveRobotGain.disconnect(); } catch (_) {} liveRobotGain = null; }
+    if (liveDirectGain) { try { liveDirectGain.disconnect(); } catch (_) {} liveDirectGain = null; }
+    if (liveCompressor) { try { liveCompressor.disconnect(); } catch (_) {} liveCompressor = null; }
+    if (liveVolumeNode) { try { liveVolumeNode.disconnect(); } catch (_) {} liveVolumeNode = null; }
+    if (liveAnalyser) { try { liveAnalyser.disconnect(); } catch (_) {} liveAnalyser = null; }
     if (indicator) indicator.classList.remove('active');
-    if (timer) timer.textContent = '00:00:00';
+    if (timer) timer.textContent = '00:00';
   }
 
   function updateLiveEffectChain() {
-    if (!isLiveRunning || !livePitchShifter) return;
+    if (!isLiveRunning || !audioContext) return;
     const activeEl = $('.effect.selected');
     const effectKey = (activeEl && activeEl.dataset.effect) || 'baby';
     const preset = presets[effectKey] || presets.baby;
+    const now = audioContext.currentTime || 0;
 
-    livePitchShifter.setPitchOffset(preset.pitch || 0);
-    if (liveFilters.low) liveFilters.low.gain.value = preset.low || 0;
-    if (liveFilters.mid) liveFilters.mid.gain.value = preset.mid || 0;
-    if (liveFilters.high) liveFilters.high.gain.value = preset.high || 0;
+    if (preset.robot) {
+      if (livePitchGain) livePitchGain.gain.setTargetAtTime(0, now, 0.02);
+      if (liveDirectGain) liveDirectGain.gain.setTargetAtTime(0, now, 0.02);
+      if (liveRobotGain) liveRobotGain.gain.setTargetAtTime(1.0, now, 0.02);
+    } else if (effectKey === 'original') {
+      if (livePitchGain) livePitchGain.gain.setTargetAtTime(0, now, 0.02);
+      if (liveRobotGain) liveRobotGain.gain.setTargetAtTime(0, now, 0.02);
+      if (liveDirectGain) liveDirectGain.gain.setTargetAtTime(1.0, now, 0.02);
+    } else {
+      if (liveRobotGain) liveRobotGain.gain.setTargetAtTime(0, now, 0.02);
+      if (liveDirectGain) liveDirectGain.gain.setTargetAtTime(0, now, 0.02);
+      if (livePitchGain) livePitchGain.gain.setTargetAtTime(1.0, now, 0.02);
+      if (livePitchShifter) livePitchShifter.setPitchOffset(preset.pitch || 0);
+    }
+
+    if (liveFilters.low) liveFilters.low.gain.setTargetAtTime(preset.low || 0, now, 0.02);
+    if (liveFilters.mid) liveFilters.mid.gain.setTargetAtTime(preset.mid || 0, now, 0.02);
+    if (liveFilters.high) liveFilters.high.gain.setTargetAtTime(preset.high || 0, now, 0.02);
   }
 
   function setLiveButtonState(state) {
@@ -1616,10 +1783,9 @@
     stopLiveTimer();
     liveTimerInterval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - liveStartedAt) / 1000);
-      const h = String(Math.floor(elapsed / 3600)).padStart(2, '0');
-      const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+      const m = String(Math.floor(elapsed / 60)).padStart(2, '0');
       const s = String(elapsed % 60).padStart(2, '0');
-      if (timer) timer.textContent = `${h}:${m}:${s}`;
+      if (timer) timer.textContent = `${m}:${s}`;
     }, 1000);
   }
 
@@ -1698,12 +1864,11 @@
         await ac.resume();
       }
 
-      // Prepare PCM capture without audio feedback
       rawPcmChunks = [];
       pcmSource = ac.createMediaStreamSource(stream);
       pcmProcessor = ac.createScriptProcessor(4096, 1, 1);
       pcmMuteGain = ac.createGain();
-      pcmMuteGain.gain.value = 0; // Muted so user doesn't hear echo while talking
+      pcmMuteGain.gain.value = 0;
 
       pcmProcessor.onaudioprocess = e => {
         if (!isRecordingMsg) return;
@@ -1719,7 +1884,6 @@
       recStartTime = Date.now();
       startRecTimer();
 
-      // UI state updates
       recordTriggerBtn.disabled = false;
       recordTriggerBtn.classList.add('recording');
       recordBtnIcon.textContent = '⏹️';
@@ -1744,7 +1908,6 @@
     isRecordingMsg = false;
     stopRecTimer();
 
-    // Disconnect PCM nodes
     if (pcmProcessor) {
       try { pcmProcessor.disconnect(); } catch (_) {}
       pcmProcessor = null;
@@ -1758,7 +1921,6 @@
       pcmMuteGain = null;
     }
 
-    // Reset Record Button UI
     recordTriggerBtn.classList.remove('recording');
     recordBtnIcon.textContent = '🎙️';
     recordBtnLabel.textContent = t('recordStart');
@@ -1767,7 +1929,6 @@
     if (recBadgeDot) recBadgeDot.style.display = 'none';
     if (recBadgeText) recBadgeText.textContent = t('badgeReady');
 
-    // Build raw AudioBuffer
     let totalSamples = 0;
     for (const chunk of rawPcmChunks) totalSamples += chunk.length;
 
@@ -1785,13 +1946,13 @@
       offset += chunk.length;
     }
 
-    // Format duration text
+    normalizeAudioBuffer(currentRawBuffer, 0.95);
+
     const durationSec = Math.round(totalSamples / ac.sampleRate);
     const m = String(Math.floor(durationSec / 60)).padStart(2, '0');
     const s = String(durationSec % 60).padStart(2, '0');
     if (playerDurationText) playerDurationText.textContent = `${m}:${s}`;
 
-    // Reveal Audio Stage Card & auto-transform with current selected effect!
     if (audioStageCard) audioStageCard.classList.add('active');
     await applyEffectTransform(currentSelectedEffect);
   }
@@ -1819,7 +1980,6 @@
     if (!currentRawBuffer) return;
     currentSelectedEffect = effectKey;
 
-    // Update active chip UI
     transformChips.forEach(chip => {
       chip.classList.toggle('active', chip.dataset.effect === effectKey);
     });
@@ -1829,9 +1989,9 @@
     if (currentEffectBadge) currentEffectBadge.textContent = effName;
     if (playerEffectName) playerEffectName.textContent = effName;
 
-    // Render Audio
     try {
       if (effectKey === 'original') {
+        normalizeAudioBuffer(currentRawBuffer, 0.95);
         currentWavBlob = bufferToWave(currentRawBuffer, currentRawBuffer.length);
       } else {
         const offlineCtx = new OfflineAudioContext(1, currentRawBuffer.length, currentRawBuffer.sampleRate);
@@ -1842,21 +2002,9 @@
         let lastNode = bufferSource;
 
         if (preset.robot) {
-          const carrier = offlineCtx.createOscillator();
-          carrier.type = 'sawtooth';
-          carrier.frequency.value = 58;
-
-          const modGain = offlineCtx.createGain();
-          modGain.gain.value = 0.6;
-
-          carrier.connect(modGain.gain);
-          bufferSource.connect(modGain);
-          carrier.start(0);
-
-          const shaper = offlineCtx.createWaveShaper();
-          shaper.curve = makeDistortionCurve(offlineCtx.sampleRate, 26);
-          modGain.connect(shaper);
-          lastNode = shaper;
+          const robot = createRobotNode(offlineCtx);
+          bufferSource.connect(robot.input);
+          lastNode = robot.output;
         } else {
           const jungle = createJungleNode(offlineCtx);
           jungle.setPitchOffset(preset.pitch || 0);
@@ -1864,16 +2012,15 @@
           lastNode = jungle.output;
         }
 
-        // Apply Equalizer Curves
         if (preset.low || preset.mid || preset.high) {
           const lowFilter = offlineCtx.createBiquadFilter();
           lowFilter.type = 'lowshelf';
-          lowFilter.frequency.value = 320;
+          lowFilter.frequency.value = 260;
           lowFilter.gain.value = preset.low || 0;
 
           const midFilter = offlineCtx.createBiquadFilter();
           midFilter.type = 'peaking';
-          midFilter.frequency.value = 1400;
+          midFilter.frequency.value = 1600;
           midFilter.gain.value = preset.mid || 0;
 
           const highFilter = offlineCtx.createBiquadFilter();
@@ -1887,17 +2034,22 @@
           lastNode = highFilter;
         }
 
-        const master = offlineCtx.createGain();
-        master.gain.value = 1.0;
-        lastNode.connect(master);
-        master.connect(offlineCtx.destination);
+        const compressor = offlineCtx.createDynamicsCompressor();
+        compressor.threshold.value = -14;
+        compressor.knee.value = 10;
+        compressor.ratio.value = 6;
+        compressor.attack.value = 0.003;
+        compressor.release.value = 0.15;
+
+        lastNode.connect(compressor);
+        compressor.connect(offlineCtx.destination);
 
         bufferSource.start(0);
         const renderedBuffer = await offlineCtx.startRendering();
+        normalizeAudioBuffer(renderedBuffer, 0.95);
         currentWavBlob = bufferToWave(renderedBuffer, renderedBuffer.length);
       }
 
-      // Update Audio Player
       if (audioPlayer && currentWavBlob) {
         if (audioPlayer.src) URL.revokeObjectURL(audioPlayer.src);
         audioPlayer.src = URL.createObjectURL(currentWavBlob);
@@ -1932,7 +2084,6 @@
         }
       }
     } else {
-      // Fallback for PC / unsupported browsers
       downloadVoiceMessage();
       showToast(t('shareFallback'), 4500);
     }
@@ -1971,13 +2122,11 @@
     if (!translations[lang]) lang = 'tr';
     const dict = translations[lang];
 
-    // Meta & Title
     document.title = dict.pageTitle;
     const desc = $('meta[name="description"]');
     if (desc && typeof desc.setAttribute === 'function') desc.setAttribute('content', dict.description);
     if (document.documentElement) document.documentElement.lang = lang;
 
-    // Elements with data-i18n
     $$('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key]) {
@@ -1985,7 +2134,6 @@
       }
     });
 
-    // Update active badges if any
     const effName = (effectNames[currentSelectedEffect] && effectNames[currentSelectedEffect][lang]) || currentSelectedEffect;
     if (currentEffectBadge) currentEffectBadge.textContent = effName;
     if (playerEffectName) playerEffectName.textContent = effName;
@@ -1993,7 +2141,6 @@
 
   /* --- Event Listeners Setup --- */
   function initApp() {
-    // Language change
     if (languageSelect) {
       languageSelect.addEventListener('change', () => {
         applyLanguage(languageSelect.value);
@@ -2001,7 +2148,6 @@
       });
     }
 
-    // Live mode toggle
     if (liveButton) {
       liveButton.addEventListener('click', () => {
         if (isLiveRunning) stopLive();
@@ -2009,30 +2155,33 @@
       });
     }
 
-    // Live Volume slider
     if (volumeSlider) {
       volumeSlider.addEventListener('input', () => {
-        const val = parseFloat(volumeSlider.value);
-        if (volumeValue) volumeValue.textContent = `${Math.round(val * 100)}%`;
-        if (liveVolumeNode) liveVolumeNode.gain.value = val;
+        const raw = parseFloat(volumeSlider.value);
+        const norm = raw > 1 ? raw / 100 : raw;
+        if (volumeValue) volumeValue.textContent = `${Math.round(norm * 100)}%`;
+        if (liveVolumeNode && audioContext) {
+          liveVolumeNode.gain.setTargetAtTime(norm, audioContext.currentTime, 0.02);
+        }
       });
     }
 
-    // Live Effect grid buttons
     $$('.effect').forEach(btn => {
       btn.addEventListener('click', () => {
-        $$('.effect').forEach(b => b.classList.remove('selected'));
+        $$('.effect').forEach(b => {
+          b.classList.remove('selected');
+          b.setAttribute('aria-pressed', 'false');
+        });
         btn.classList.add('selected');
+        btn.setAttribute('aria-pressed', 'true');
         updateLiveEffectChain();
       });
     });
 
-    // Voice Studio Record button
     if (recordTriggerBtn) {
       recordTriggerBtn.addEventListener('click', toggleVoiceRecording);
     }
 
-    // Transform chips
     transformChips.forEach(chip => {
       chip.addEventListener('click', () => {
         const eff = chip.dataset.effect;
@@ -2040,12 +2189,10 @@
       });
     });
 
-    // Share & Download & New Record
     if (shareMsgBtn) shareMsgBtn.addEventListener('click', shareVoiceMessage);
     if (downloadMsgBtn) downloadMsgBtn.addEventListener('click', downloadVoiceMessage);
     if (newRecordBtn) newRecordBtn.addEventListener('click', resetVoiceStudio);
 
-    // Permission Modal actions
     if (permAllowBtn) {
       permAllowBtn.addEventListener('click', async () => {
         if (permOverlay) permOverlay.style.display = 'none';
@@ -2061,19 +2208,16 @@
       });
     }
 
-    // First load permission check
     const savedPerm = localStorage.getItem('realtime_mic_permission');
     if (savedPerm !== 'granted' && permOverlay) {
       permOverlay.style.display = 'flex';
     }
 
-    // Saved language
     const savedLang = localStorage.getItem('realtime_language') || 'tr';
     if (languageSelect) languageSelect.value = savedLang;
     applyLanguage(savedLang);
   }
 
-  // Initialize once DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);
   } else {
